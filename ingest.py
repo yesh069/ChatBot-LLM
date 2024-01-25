@@ -10,7 +10,6 @@ import warnings
 
 warnings.filterwarnings("ignore", category=UserWarning, module="torch._utils")
 
-# Create vector database
 def create_vector_db():
     loader = DirectoryLoader(DATA_PATH, glob='*.pdf', loader_cls=PyPDFLoader)
 

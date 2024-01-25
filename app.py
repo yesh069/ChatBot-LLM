@@ -32,7 +32,7 @@ def set_custom_prompt():
                             input_variables=['context', 'question'])
     return prompt
 
-# Retrieval QA Chain 
+
 def retrieval_qa_chain(llm, prompt, db):
     retriever = db.as_retriever(search_kwargs={'k': 2})
     qa_chain = RetrievalQA.from_chain_type(llm=llm,
@@ -46,7 +46,6 @@ def retrieval_qa_chain(llm, prompt, db):
 # Loading the model
 @st.cache_resource
 def load_llm():
-    # Load the locally downloaded model here
     llm = CTransformers(
         model="TheBloke/Llama-2-7B-Chat-GGML",
         model_type="llama",
@@ -55,7 +54,6 @@ def load_llm():
     )
     return llm
 
-# QA Model Function
 def qa_bot():
     embeddings = HuggingFaceEmbeddings(model_name="sentence-transformers/all-MiniLM-L6-v2",
                                        model_kwargs={'device': 'cpu'})
@@ -65,7 +63,6 @@ def qa_bot():
     qa = retrieval_qa_chain(llm, qa_prompt, db)
     return qa
 
-# Streamlit App
 def get_chain():
     return qa_bot()
 
@@ -90,7 +87,6 @@ def main():
             message_placeholder = st.empty()
             full_response = ""
             try:
-                # Call your question-answering model here
                 chain = get_chain()
                 result = chain({'query': user_input})
                 assistant_response = result["result"]
